@@ -1,0 +1,2 @@
+# Preserve exact payload bytes on Windows, regardless of core.autocrlf.
+* -text

@@ -57,6 +57,7 @@ try {
     }
     Test-Case 'Uninstall preserves configuration and unrelated files, optional removal stays bounded' {
         $target = Join-Path $temporary "user's folder with space"
+        & $installer -ProxyPort 23456 -InstallDirectory $target -NoShortcut | Out-Null
         $foreign = Join-Path $target 'keep-my-file.txt'
         [IO.File]::WriteAllText($foreign, 'user data')
         & $uninstaller -InstallDirectory $target | Out-Null

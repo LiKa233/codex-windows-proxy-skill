@@ -1,82 +1,84 @@
 # Codex Windows Proxy Skill
 
-�� Windows �̵�� Codex ��Ӧ�ü���������������ɿɰ�װ���ɼ�顢��ж�ص� skill��**��װʱ�������û��ṩ���� HTTP/Mixed �����˿�**�����²�˿ڣ�������ϵͳ������ TUN��
+将 Windows 商店版 Codex 的应用级代理启动器打包成可安装、可检查、可卸载的 skill。**安装时必须由用户提供本机 HTTP/Mixed 代理端口**，不猜测端口，不开启系统代理或 TUN。
 
-��ǰ�汾��`1.0.0-rc.1`���ͻ���������������������֤�д��������¡��������Ƽ����� EXE �� [�������ֿ�](https://github.com/LiKa233/codex-windows-proxy-launcher)�����Ƿ�Χ�� [��ָ֤��](skills/codex-windows-proxy/references/verification.md)��
+当前版本：`1.0.0-rc.1`。客户端冷启动和完整功能验证尚待后续更新。完整机制及独立 EXE 见 [启动器仓库](https://github.com/LiKa233/codex-windows-proxy-launcher)，覆盖范围见 [验证指南](skills/codex-windows-proxy/references/verification.md)。
 
 English: A Codex skill for installing and inspecting the per-process Windows Microsoft Store client launcher. The user must provide their actual local HTTP/Mixed proxy port. The launcher scripts are bundled with SHA-256 provenance, so installation does not fetch an unpinned runtime. This is a release candidate, not a claim of full client feature compatibility.
 
-## ���û����Ͱ汾
+## 适用环境和版本
 
-- Windows x64��Windows PowerShell 5.1����ǰ�û���װ���̵�� `OpenAI.Codex_2p2nqsd0c76g0`��
-- ��ǰ�����۲쵽�Ѱ�װ MSIX `26.1013.4894.0`���������оɰ� `26.1007.9446.0`��ǰ��������/���������Դ���֤��
-- ��ǰ��������Ϊ Windows 11 `10.0.26100`���嵥���Ҫ��Ϊ `10.0.19041.0`�����ܰ��������ż�д�� Windows 10 ��ʵ�⡣
-- ��������������֤�� HTTP/Mixed ������SOCKS-only��Զ�̴�����macOS/Linux/WSL �ڿͻ��˲����װ淶Χ��
-- skill ������Ҫ�� .NET EXE��Node.js��Python ����� CLI���䰲װ/�������� Windows PowerShell�������Լ��� skill ��װ��ʽ��������Ҫ��
+- Windows x64、Windows PowerShell 5.1；当前用户安装了商店包 `OpenAI.Codex_2p2nqsd0c76g0`。
+- 当前机器观察到已安装 MSIX `26.1013.4894.0`，但仍运行旧版 `26.1007.9446.0`。前者冷启动/功能验收仍待验证。
+- 当前开发环境为 Windows 11 `10.0.26100`。清单最低要求为 `10.0.19041.0`，不能把这个最低门槛写成 Windows 10 已实测。
+- 本机已有无需认证的 HTTP/Mixed 代理；SOCKS-only、远程代理、macOS/Linux/WSL 内客户端不是首版范围。
+- skill 自身不要求 .NET EXE、Node.js、Python 或独立 CLI；其安装/运行依靠 Windows PowerShell。宿主自己的 skill 安装方式可能另有要求。
 
-## ��װ skill
+## 安装 skill
 
-��֧�ֱ��� skills �� Codex ��˵����
+在支持本地 skills 的 Codex 中说明：
 
-> �밲װ GitHub �ֿ� `LiKa233/codex-windows-proxy-skill` �е� `skills/codex-windows-proxy`��
+> 请安装 GitHub 仓库 `LiKa233/codex-windows-proxy-skill` 中的 `skills/codex-windows-proxy`。
 
-Ҳ�����زֿ⣬������ `skills/codex-windows-proxy` �ļ��зŵ���ǰ����֧�ֵĸ��� skills Ŀ¼����ǰ�ٷ��ĵ��г��ĸ���Ŀ¼Ϊ `~/.agents/skills`��ĳЩ�ɰ�ͻ���/��װ����ʹ�� `~/.codex/skills`����������ʵ�ʷ�����ΪΪ׼���ֿ⼶λ��Ϊ `.agents/skills`�����¼���/����������ȷ���ܷ��� `$codex-windows-proxy`�������ļ��������������������װ���������ա�
+也可下载仓库，将整个 `skills/codex-windows-proxy` 文件夹放到当前宿主支持的个人 skills 目录。当前官方文档列出的个人目录为 `~/.agents/skills`；某些旧版客户端/安装器仍使用 `~/.codex/skills`，须以宿主实际发现行为为准。仓库级位置为 `.agents/skills`。重新加载/重启宿主后确认能发现 `$codex-windows-proxy`。复制文件不等于已完成启动器安装或联网验收。
 
-����ʾ����
+调用示例：
 
-> ʹ�� `$codex-windows-proxy` ��װ����������������ȷ�� HTTP/Mixed �˿ڣ�������ǰ�ͻ��˺����ڽ��е�����
+> 使用 `$codex-windows-proxy` 安装启动器。请先向我确认 HTTP/Mixed 端口，保留当前客户端和正在进行的任务。
 
-## �ֶ���װ������
+## 手动安装启动器
 
-���� `skills/codex-windows-proxy` Ŀ¼���� Windows PowerShell 5.1 ��ִ�У�
+进入 `skills/codex-windows-proxy` 目录，在 Windows PowerShell 5.1 中执行：
 
 ```powershell
-$myProxyPort = Read-Host '���������Լ��� HTTP/Mixed �����˿�'
+$myProxyPort = Read-Host '请输入你自己的 HTTP/Mixed 代理端口'
 .\scripts\Install-Launcher.ps1 -ProxyPort $myProxyPort
 ```
 
-δ����˿�ʱ����װ�ű�Ҳ��Ҫ�����롣ȱʧ�������ֻ��� `1�C65535` ��ֵ���ᱻ�滻ΪĬ��ֵ��
+未传入端口时，安装脚本也会要求输入。缺失、非数字或不在 `1–65535` 的值不会被替换为默认值。
 
-Ĭ�ϰ�װĿ¼��`%LOCALAPPDATA%\CodexProxyLauncher\installed`�����������ݷ�ʽ `Codex Proxy Launcher.lnk`��������ԭ������������ͬ�����޷�ȷ�����ڱ���װ�Ŀ�ݷ�ʽ��ֹͣ��װ��˵��ԭ��
+默认安装目录：`%LOCALAPPDATA%\CodexProxyLauncher\installed`。新增桌面快捷方式 `Codex Proxy Launcher.lnk`，不覆盖原启动器。已有同名但无法确认属于本安装的快捷方式会停止安装并说明原因。
 
-��װֻ�����������ļ������ã��������ɿͻ��ˡ����޸� `.codex/config.toml`���˻���ϵͳ������TUN �����������񡣰�װ�����ȷ���֡��ļ��Ѱ�װ���͡���������֤����
+安装只放置启动器文件和配置，不结束旧客户端、不修改 `.codex/config.toml`、账户、系统代理、TUN 或自启动任务。安装结果明确区分“文件已安装”和“连接已验证”。
 
-## �����ʹ��
+## 检查与使用
 
 ```powershell
 .\scripts\Check-Launcher.ps1
 ```
 
-���ʹ�� Windows PowerShell 5.1������ֲ� JSON ���˳��룬���������������ͻ��ˡ���д���û���־��`Success` ����ʾ���ֿͻ����� CONNECT/TLS ͨ����403/��ҳ��֤���˺ż�����״̬�ֱ��¼��
+检查使用 Windows PowerShell 5.1，输出分层 JSON 和退出码，不弹窗、不启动客户端、不写配置或日志。`Success` 仅表示发现客户端且 CONNECT/TLS 通过；403/网页验证、账号及功能状态分别记录。
 
-��������������ȫ�˳�����ͻ��˺�ʹ���¿�ݷ�ʽ���������ɰ��������У�����������ֹ���þ�ʵ����˵��ԭ�򣬲��Զ���ֹ����
+保存任务并自行完全退出桌面客户端后，使用新快捷方式启动。若旧版仍在运行，启动器会阻止复用旧实例并说明原因，不自动终止任务。
 
-�˿ڱ仯�󣬿ɱ༭��װĿ¼�е� `launcher.config.json`��˫�� `Configure Proxy.cmd`�����ٴδ��¶˿����а�װ�ű������ñ仯ֻ���´��½�������ʱӦ�á�
+端口变化后，可编辑安装目录中的 `launcher.config.json`，双击 `Configure Proxy.cmd`，或再次带新端口运行安装脚本。配置变化只在下次新进程启动时应用。
 
-## ԭ����߽�
+## 原理与边界
 
-�������ĸ� Chromium ������ʽ `--proxy-server`����֧�ֻ����������ӽ��̴��� `HTTP_PROXY/HTTPS_PROXY`������ֻ�����ڸý��������ػ���ַ����ֱ����Clash ����λ�� `127.0.0.1` ����������������
+启动核心给 Chromium 传递显式 `--proxy-server`，给支持环境变量的子进程传递 `HTTP_PROXY/HTTPS_PROXY`；设置只作用于该进程树。回环地址保持直连，Clash 自身位于 `127.0.0.1` 不妨碍外网代理。
 
-�����߲������ `--proxy-bypass-list=<-loopback>`�������������˼��**ȡ��** Chromium ����ʽ�����ƹ��������ñ��ص�ֱַ����
+本工具不会加入 `--proxy-bypass-list=<-loopback>`：这个参数的意思是**取消** Chromium 的隐式本地绕过，不是让本地地址直连。
 
-�����˿ڴ����� HTTP �������ã�CONNECT �ɹ������� TLS �ɹ���TLS �ɹ��������˻����Ի������й��߿��á�������������Զ�����ӡ���������������ջ����ֱ���֤������Ҫ��ȷ��ϵͳ�����رա�TUN �رա�������������
+代理端口存活不等于 HTTP 代理可用；CONNECT 成功不等于 TLS 成功；TLS 成功不等于账户、对话和所有工具可用。浏览器、插件、远程连接、语音和其他网络栈必须分别验证，尤其要明确“系统代理关闭、TUN 关闭”的验收条件。
 
-���ݣ�[Electron ����](https://www.electronjs.org/docs/latest/api/command-line-switches)��[Chromium ��������](https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md)��[OpenAI skills �ĵ�](https://developers.openai.com/codex/skills)������˵�������ʵ�⡣
+依据：[Electron 参数](https://www.electronjs.org/docs/latest/api/command-line-switches)、[Chromium 代理机制](https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md)、[OpenAI skills 文档](https://developers.openai.com/codex/skills)。机制说明不替代实测。
 
-## ж����ά��
+## 卸载与维护
 
 ```powershell
 .\scripts\Uninstall-Launcher.ps1
-# ��ҲҪɾ���������Լ��Ķ˿����ã�
+# 如也要删除启动器自己的端口配置：
 .\scripts\Uninstall-Launcher.ps1 -RemoveConfiguration
 ```
 
-ж�ؽű���������Ȩ��Ǻ͹̶��ļ����Ƴ��ļ������ݹ�ɾ����װĿ¼������·����Ĭ�ϱ����˿����ú�����Ȩ��ǣ���ʹĿ¼���������ŵ��ļ���Ҳ�ᱣ����������ָ�򱾰�װʱ��ɾ����ݷ�ʽ��
+卸载脚本根据所有权标记和固定文件名移除文件，不递归删除安装目录或其他路径。默认保留端口配置和所有权标记；即使目录中有你另放的文件，也会保留。仅当仍指向本安装时才删除快捷方式。
 
-skill ������ͨ�������� skills ���������Ƴ�����ɾ���㸴�Ƶ� skill �ļ��У�����ж���Ѱ�װ���������������¡�
+skill 本身可通过宿主的 skills 管理功能移除，或删除你复制的 skill 文件夹；这与卸载已安装的启动器是两件事。
 
-����Դ��Ϊ�����������ֿ�� `src`�����հ汾��ÿ���ļ��� SHA-256 ��¼�� `assets/launcher/UPSTREAM.json`����װǰ���У�顣У��ֵ˵������һ���ԣ����Ƿ����ߵ�����ǩ����
+上游源码为独立启动器仓库的 `src`。快照版本和每个文件的 SHA-256 记录在 `assets/launcher/UPSTREAM.json`；安装前逐个校验。校验值说明快照一致性，不是发行者的数字签名。
 
-���Ժͷ��а��� Windows CI �����ɣ��� Actions �� Releases�����մ������ĵ����£���ǰ��δ֤�����пͻ��˹����ڹر�ϵͳ����/TUN ʱ�����á�
+`.gitattributes` 保留文件原始字节，防止 Windows Git 的自动换行转换破坏快照哈希。维护者更改脚本或编码后必须重新导出快照及哈希，不能只更新说明文字。
 
-����֤��MIT���� [LICENSE](LICENSE)��
+测试和发行包在 Windows CI 中生成，见 Actions 与 Releases。验收待办随文档更新；当前尚未证明所有客户端功能在关闭系统代理/TUN 时都可用。
+
+许可证：MIT，见 [LICENSE](LICENSE)。
