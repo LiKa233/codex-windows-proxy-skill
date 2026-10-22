@@ -1,0 +1,5 @@
+dist/
+launcher.config.json
+*.log
+*.local.json
+Thumbs.db
