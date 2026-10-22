@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Windows Proxy"
+  short_description: "Install and verify a local per-process Codex proxy launcher"
+  default_prompt: "Use $codex-windows-proxy to install or inspect my Windows Codex proxy launcher, asking me for the actual HTTP/Mixed proxy port before installation."

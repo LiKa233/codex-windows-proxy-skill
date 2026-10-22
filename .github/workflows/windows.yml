@@ -1,0 +1,29 @@
+name: Windows skill and installation checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Test bundled launcher core
+        shell: powershell
+        run: ./tests/Run-Tests.ps1
+      - name: Test bounded install and uninstall
+        shell: powershell
+        run: ./tests/Install.Tests.ps1
+      - name: Build skill archive and checksums
+        shell: powershell
+        run: ./build.ps1
+      - name: Upload test evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: skill-test-results
+          path: |
+            tests/*.local.json
+            dist/*.zip
+            dist/SHA256SUMS.txt

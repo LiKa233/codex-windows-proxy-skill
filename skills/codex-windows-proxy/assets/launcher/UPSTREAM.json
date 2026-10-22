@@ -1,0 +1,13 @@
+{
+    "repository":  "https://github.com/LiKa233/codex-windows-proxy-launcher",
+    "version":  "1.0.0-rc.1",
+    "sourceDirectory":  "src",
+    "sha256":  {
+                   "Launcher.Core.psm1":  "ebf6809317cad533dea89665c0b63eb8bc3a9f4f9ff333244757ccbf6761f36b",
+                   "Launcher.ps1":  "392ba9e62cb9b4aa50a9d21a97a6317f794b5b32124488c966bf37ca91abd0db",
+                   "Codex Proxy Launcher.cmd":  "e5911ea34340f3f7cefc9e41e3671aa761d2dd54262f14f5fd1640bbffefbc4c",
+                   "Configure Proxy.cmd":  "dd68f0ef36679c8ed29a619bbe4b4c07094c8b1a9d61b7c7943478bb50e5e958",
+                   "Check Proxy.cmd":  "5a50f99fdf3f85fe641edcb3d9e5ebccd26eb6f1527ce26e24f51d773c04997f",
+                   "launcher.config.example.json":  "66790bba95b9d8371a05cdedf74aa74db7fc548c19cedc78229331dc14795796"
+               }
+}

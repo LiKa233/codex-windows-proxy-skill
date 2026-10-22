@@ -1,0 +1,4 @@
+@echo off
+setlocal
+"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoLogo -NoProfile -STA -ExecutionPolicy Bypass -File "%~dp0Launcher.ps1" -Configure %*
+exit /b %errorlevel%

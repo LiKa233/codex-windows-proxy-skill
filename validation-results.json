@@ -1,0 +1,99 @@
+{
+  "RecordedDate": "2026-10-22",
+  "ClientPackageVersion": "26.1013.4894.0",
+  "SystemManualProxyEnabled": false,
+  "TunMode": "NotObserved",
+  "Network": {
+    "Success": true,
+    "ProxyTcp": true,
+    "HttpConnect": true,
+    "Tls": true,
+    "TlsProtocol": "Tls13",
+    "HttpStatus": 403,
+    "HttpDisposition": "WebChallenge",
+    "ApplicationVerification": "NotTested",
+    "Failure": null,
+    "HttpWarning": null,
+    "ElapsedMs": 1966
+  },
+  "CoreTests": {
+    "Suite": "Launcher core",
+    "Passed": 10,
+    "Failed": 0,
+    "Cases": [
+      {
+        "Name": "Port boundaries and absent input never become a guessed default",
+        "Passed": true
+      },
+      {
+        "Name": "Proxy scheme and scope validation reject remote endpoints",
+        "Passed": true
+      },
+      {
+        "Name": "Configuration roundtrip, edit and malformed JSON preserve existing files",
+        "Passed": true
+      },
+      {
+        "Name": "Package resolution cannot escape the registered directory",
+        "Passed": true
+      },
+      {
+        "Name": "Proxy is inherited by a real helper without altering parent or certificate settings",
+        "Passed": true
+      },
+      {
+        "Name": "Local Schannel credential errors are classified separately",
+        "Passed": true
+      },
+      {
+        "Name": "A live non-proxy/rejected port is not reported as usable",
+        "Passed": true
+      },
+      {
+        "Name": "CONNECT acceptance without TLS is a TLS-stage failure, not TCP success",
+        "Passed": true
+      },
+      {
+        "Name": "Silent and dripping proxy headers respect a total stage deadline",
+        "Passed": true
+      },
+      {
+        "Name": "CheckOnly with missing configuration exits nonzero without creating it",
+        "Passed": true
+      }
+    ]
+  },
+  "SkillInstallTests": {
+    "Suite": "Skill install",
+    "Passed": 6,
+    "Failed": 0,
+    "Cases": [
+      {
+        "Name": "Invalid user port fails before installing any files",
+        "Passed": true
+      },
+      {
+        "Name": "Install and reinstall use the supplied port without launching or claiming connection",
+        "Passed": true
+      },
+      {
+        "Name": "Installer rejects a nonempty unowned target",
+        "Passed": true
+      },
+      {
+        "Name": "A tampered bundled payload fails checksum validation before installation",
+        "Passed": true
+      },
+      {
+        "Name": "Uninstall preserves configuration and unrelated files, optional removal stays bounded",
+        "Passed": true
+      },
+      {
+        "Name": "Uninstaller refuses a directory without an ownership marker",
+        "Passed": true
+      }
+    ]
+  },
+  "ClientColdStart": "Pending",
+  "FullFeatureVerification": "Pending"
+}
