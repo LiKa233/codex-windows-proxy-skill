@@ -1,17 +1,17 @@
 # Codex Windows Proxy Skill
 
-2026-10-23 补充：用户已通过桌面旧启动器运行新版 `26.1013.4894.0`，系统代理关闭、TUN 由用户确认关闭；进程仍带有旧版 `<-loopback>` 参数。新 EXE/脚本冷启动继续待验。详见[重启观察](skills/codex-windows-proxy/references/verification.md)。
+2026-10-23 更新：新 EXE 首次端口配置及 MSIX `26.1013.4894.0` 冷启动已通过；系统代理关闭、TUN 由用户确认关闭。新进程无 `<-loopback>` 参数，账号/工作区、本地工具、内置浏览器外网及 IPv4 本地预览已完成基础验证。完整功能和脚本独立冷启动仍待验。详见[最新验收记录](skills/codex-windows-proxy/references/verification.md)。
 
 将 Windows 商店版 Codex 的应用级代理启动器打包成可安装、可检查、可卸载的 skill。**安装时必须由用户提供本机 HTTP/Mixed 代理端口**，不猜测端口，不开启系统代理或 TUN。
 
-当前版本：`1.0.0-rc.1`。客户端冷启动和完整功能验证尚待后续更新。完整机制及独立 EXE 见 [启动器仓库](https://github.com/LiKa233/codex-windows-proxy-launcher)，覆盖范围见 [验证指南](skills/codex-windows-proxy/references/verification.md)。
+当前版本：`1.0.0-rc.1`。新 EXE 基础冷启动验收已通过；skill 安装后入口和脚本的独立冷启动及完整功能验证仍待后续更新。完整机制及独立 EXE 见 [启动器仓库](https://github.com/LiKa233/codex-windows-proxy-launcher)，覆盖范围见 [验证指南](skills/codex-windows-proxy/references/verification.md)。
 
 English: A Codex skill for installing and inspecting the per-process Windows Microsoft Store client launcher. The user must provide their actual local HTTP/Mixed proxy port. The launcher scripts are bundled with SHA-256 provenance, so installation does not fetch an unpinned runtime. This is a release candidate, not a claim of full client feature compatibility.
 
 ## 适用环境和版本
 
 - Windows x64、Windows PowerShell 5.1；当前用户安装了商店包 `OpenAI.Codex_2p2nqsd0c76g0`。
-- 当前机器观察到已安装 MSIX `26.1013.4894.0`，10 月 22 日运行旧版 `26.1007.9446.0`，10 月 23 日已由旧启动器运行新版。新启动器冷启动/功能验收仍待验证。
+- 当前机器观察到已安装 MSIX `26.1013.4894.0`，10 月 22 日运行旧版 `26.1007.9446.0`，10 月 23 日已由旧启动器运行新版。新 EXE 基础冷启动已通过；skill 安装后入口及完整功能验收仍待验证。
 - 当前开发环境为 Windows 11 `10.0.26100`。清单最低要求为 `10.0.19041.0`，不能把这个最低门槛写成 Windows 10 已实测。
 - 本机已有无需认证的 HTTP/Mixed 代理；SOCKS-only、远程代理、macOS/Linux/WSL 内客户端不是首版范围。
 - skill 自身不要求 .NET EXE、Node.js、Python 或独立 CLI；其安装/运行依靠 Windows PowerShell。宿主自己的 skill 安装方式可能另有要求。

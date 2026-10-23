@@ -94,6 +94,67 @@
       }
     ]
   },
-  "ClientColdStart": "Pending",
-  "FullFeatureVerification": "Pending"
+  "ClientColdStart": "ExePassedScriptPending",
+  "FullFeatureVerification": "Partial",
+  "LatestObservationDate": "2026-10-23",
+  "FreshExeAcceptance": {
+    "RecordedDate": "2026-10-23",
+    "TimeZone": "Asia/Hong_Kong",
+    "LauncherVersion": "1.0.0-rc.1",
+    "ExeSha256": "ded773765c79020751edd56b513ec0e46413d1defe2bb6fe579fb80a1c867838",
+    "ExeReleasedHashMatches": true,
+    "ExtractedRuntimeMatchesSource": true,
+    "RunningClientPackageVersion": "26.1013.4894.0",
+    "RunningBackendCliVersion": "0.163.0-alpha.10.2",
+    "WindowsVersion": "10.0.26100.0",
+    "PowerShellVersion": "5.1.26100.7462",
+    "UserConfirmedFirstRunPortPromptAndAccountWorkspace": true,
+    "SystemManualProxyEnabled": false,
+    "PacConfigured": false,
+    "TunMode": "OffUserConfirmed",
+    "TunRuntimeControllerQueried": false,
+    "ActiveAdapterObservation": "EthernetOnly",
+    "ExplicitChromiumProxyFlagPresent": true,
+    "DisableImplicitLoopbackBypassFlagPresent": false,
+    "LauncherLogMatchesNewProcess": true,
+    "ExeColdStart": "Passed",
+    "ScriptColdStart": "Pending",
+    "SkillInstalledEntryColdStart": "Pending",
+    "ProxyConnectionsObserved": [
+      "FrontendNetworkService",
+      "AppServer",
+      "ExecServer"
+    ],
+    "ModelInteraction": "LiveResponseAndToolRoundTripsObserved",
+    "CompletedModelResponseUserAcknowledgement": "Pending",
+    "LocalReadOnlyTools": "Passed",
+    "InAppBrowserHttps": "PassedAfterInitialNavigationTimeout",
+    "InAppBrowserIpv4LoopbackPreview": "Passed",
+    "TemporaryPreviewServerStopped": true,
+    "PluginReadObserved": [
+      "GitHub"
+    ],
+    "NetworkProbe": {
+      "ProxyTcp": true,
+      "HttpConnect": true,
+      "Tls": true,
+      "TlsProtocol": "Tls13",
+      "HttpStatus": 403,
+      "HttpDisposition": "WebChallenge",
+      "ApplicationVerification": "NotTested"
+    },
+    "Remaining": [
+      "IndependentScriptAndSkillEntryColdStart",
+      "RelaunchWithSavedConfig",
+      "CompletedModelResponseAcknowledgement",
+      "OtherPluginsAndBridges",
+      "RemoteDeviceTask",
+      "Voice",
+      "ImageGeneration",
+      "LongRunningStability",
+      "OtherVersionsAndPlatforms",
+      "Ipv6AndLocalhostAliases"
+    ],
+    "FullFeatureVerification": "Incomplete"
+  }
 }
